@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+deno run --allow-read --allow-write --allow-run --allow-env --importmap=import_map.json --unstable git-id.ts "$@"
