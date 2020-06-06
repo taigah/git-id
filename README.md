@@ -5,7 +5,7 @@ A simple tool to manage git identities and apply them to your repositories.
 ## Installation
 
 ```bash
-deno install --allow-read --allow-write --allow-run --allow-env https://raw.githubusercontent.com/taigah/git-id/master/git-id.ts "$@"
+deno install --allow-read --allow-write --allow-run --allow-env https://raw.githubusercontent.com/taigah/git-id/v1.1.0/git-id.ts "$@"
 ```
 
 ## Usage
@@ -38,4 +38,4 @@ git-id ls
 
 ### Configuring identities file location
 
-By default, git-id stores the identities in `$HOME/.git-identities.json`, if you want to use another location use the `--id-file=<id file path>` flag.
+By default, git-id stores the identities in `$XDG_CONFIG_HOME/git-id/identities.json` or fallbacks to `$HOME/.git-identities.json`, if you want to use another location use the `--id-file=<id file path>` flag.

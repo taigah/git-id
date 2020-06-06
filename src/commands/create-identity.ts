@@ -1,4 +1,4 @@
-import { prompt } from '../prompt.ts'
+import { prompt } from '../../lib/prompt.ts'
 import { loadIdentities, saveIdentities } from '../utils.ts'
 import { CLIError } from '../errors.ts'
 

@@ -1,5 +1,6 @@
-import { readJson } from 'https://deno.land/std@0.54.0/fs/read_json.ts'
-import { writeJson } from 'https://deno.land/std@0.54.0/fs/write_json.ts'
+import { readJson, writeJson } from '../deps/fs.ts'
+import { parse as pathParse, join as pathJoin } from '../deps/path.ts'
+import { CLIError } from './errors.ts'
 
 export interface Identity {
   name: string,
@@ -12,8 +13,18 @@ export async function loadIdentities (idFile: string): Promise<Map<string, Ident
     return new Map(Object.entries(identities))
   } catch (err) {
     if (err.constructor === Deno.errors.NotFound) {
-      await Deno.writeFile(idFile, new Uint8Array())
-      return new Map()
+      try {
+        // ensure directory and file
+        const dir = pathParse(idFile).dir
+        await Deno.mkdir(dir, { recursive: true })
+        await Deno.writeFile(idFile, new Uint8Array())
+        return new Map()
+      } catch (err) {
+        if (err.name === 'PermissionDenied') {
+          throw new CLIError(`Permision denied: Could not write configuration directory or file`)
+        }
+        throw err
+      }
     }
     if (err.message.includes(`Unexpected end of JSON input`)) {
       return new Map()
@@ -27,6 +38,14 @@ export async function saveIdentities (idFile: string, identities: Map<string, Id
   await writeJson(idFile, identitiesObject)
 }
 
-export function homeDir () {
-  return Deno.env.get('HOME')
+export function getDefaultIdFileLocation () {
+  const XDG_CONFIG_HOME = Deno.env.get('XDG_CONFIG_HOME')
+  if (XDG_CONFIG_HOME) {
+    return pathJoin(XDG_CONFIG_HOME, 'git-id/identities.json')
+  }
+  const HOME = Deno.env.get('HOME')
+  if (HOME) {
+    return pathJoin(HOME, '.git-identities.json')
+  }
+  throw new CLIError(`Could not find a suitable directory, set $XDG_CONFIG_HOME, $HOME or use the --id-file flag`)
 }

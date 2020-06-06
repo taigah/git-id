@@ -1,5 +1,5 @@
-import { assertEquals } from 'https://deno.land/std@0.54.0/testing/asserts.ts'
-import { prompt } from './src/prompt.ts'
+import { assertEquals } from '../deps/testing.ts'
+import { prompt } from '../lib/prompt.ts'
 
 Deno.test('should prompt successfully', async () => {
   const expected = `something` + Math.random()
