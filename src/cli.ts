@@ -4,7 +4,7 @@ const description = `Manage git identities and apply them to your repositories.`
 
 const usage = [
   `git-id [options] create <name>`,
-  `git-id [options] delete <name>`,
+  `git-id [options] remove <name>`,
   `git-id [options] apply <name>`,
   `git-id [options] ls`
 ].map(v => '  ' + v).join('\n')
