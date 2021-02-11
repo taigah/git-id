@@ -5,7 +5,7 @@ A simple tool to manage git identities and apply them to your repositories.
 ## Installation
 
 ```bash
-deno install --allow-read --allow-write --allow-run --allow-env https://raw.githubusercontent.com/taigah/git-id/v1.2.0/git-id.ts "$@"
+deno install --allow-read --allow-write --allow-run --allow-env https://raw.githubusercontent.com/taigah/git-id/v1.3.0/git-id.ts "$@"
 ```
 
 ## Usage
